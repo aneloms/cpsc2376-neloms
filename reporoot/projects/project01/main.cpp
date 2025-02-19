@@ -8,21 +8,20 @@ int main() {
 
     printRules();
 
+    makeBoard(board);
+
     while (!gameOver) {
-        makeBoard(board);
+        displayBoard(board);
 
         bool validMove = false;
-
         while (!validMove) {
             int column = getPlayerMove();
             validMove = play(board, column, currentPlayer);
 
             if (!validMove) {
-                std::cout << "Column full, try another one.\n";
+                std::cout << "Invalid move. Try again.\n";
             }
         }
-
-        std::cout << "Board display not implemented yet.\n";
 
         GameState status = gameStatus(board);
 
@@ -37,13 +36,13 @@ int main() {
             gameOver = true;
         }
 
+        currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
+
         if (gameOver && askPlayAgain()) {
             gameOver = false;
-        } else {
-            break;
+            makeBoard(board);
         }
-
-        currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';  // Switch players
     }
+
     return 0;
 }
