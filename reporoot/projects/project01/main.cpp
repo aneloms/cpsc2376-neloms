@@ -8,39 +8,44 @@ int main() {
 
     printRules();
 
-    makeBoard(board);
+    while (true) {
+        makeBoard(board);
+        gameOver = false;
 
-    while (!gameOver) {
-        displayBoard(board);
+        while (!gameOver) {
+            displayBoard(board);
 
-        bool validMove = false;
-        while (!validMove) {
-            int column = getPlayerMove();
-            validMove = play(board, column, currentPlayer);
+            bool validMove = false;
+            while (!validMove) {
+                int column = getPlayerMove();
+                validMove = play(board, column, currentPlayer);
 
-            if (!validMove) {
-                std::cout << "Invalid move. Try again.\n";
+                if (!validMove) {
+                    std::cout << "Column full or invalid. Try again.\n";
+                }
             }
+
+            GameState status = gameStatus(board);
+
+            if (status == PLAYER_1_WINS) {
+                displayBoard(board);
+                std::cout << "Player 1 (X) wins!\n";
+                gameOver = true;
+            } else if (status == PLAYER_2_WINS) {
+                displayBoard(board);
+                std::cout << "Player 2 (O) wins!\n";
+                gameOver = true;
+            } else if (status == DRAW) {
+                displayBoard(board);
+                std::cout << "It's a draw!\n";
+                gameOver = true;
+            }
+
+            currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
         }
 
-        GameState status = gameStatus(board);
-
-        if (status == PLAYER_1_WINS) {
-            std::cout << "Player 1 (X) wins!\n";
-            gameOver = true;
-        } else if (status == PLAYER_2_WINS) {
-            std::cout << "Player 2 (O) wins!\n";
-            gameOver = true;
-        } else if (status == DRAW) {
-            std::cout << "It's a draw!\n";
-            gameOver = true;
-        }
-
-        currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
-
-        if (gameOver && askPlayAgain()) {
-            gameOver = false;
-            makeBoard(board);
+        if (!askPlayAgain()) {
+            break;
         }
     }
 
