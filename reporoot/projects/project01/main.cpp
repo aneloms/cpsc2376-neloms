@@ -3,8 +3,8 @@
 
 int main() {
     char board[6][7];
-    bool gameOver = false;
     char currentPlayer = 'X';
+    bool gameOver = false;
 
     printRules();
 
@@ -19,10 +19,7 @@ int main() {
             while (!validMove) {
                 int column = getPlayerMove();
                 validMove = play(board, column, currentPlayer);
-
-                if (!validMove) {
-                    std::cout << "Column full or invalid. Try again.\n";
-                }
+                if (!validMove) std::cout << "Column full or invalid. Try again.\n";
             }
 
             GameState status = gameStatus(board);
@@ -44,9 +41,7 @@ int main() {
             currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
         }
 
-        if (!askPlayAgain()) {
-            break;
-        }
+        if (!askPlayAgain()) break;
     }
 
     return 0;
