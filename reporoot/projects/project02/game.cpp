@@ -3,10 +3,7 @@
 Game::Game() : board(6, std::vector<Cell>(7, EMPTY)), currentPlayer(PLAYER_1) {}
 
 void Game::play(int column) {
-    // TODO: Implement dropping a piece into the column (Connect 4 logic)
-    // - Check if the column is full
-    // - Place the piece in the lowest available row
-    // - Switch the current player
+
 
     if (column < 0 || column >= 7) {
         std::cout << "Invalid move. Choose a column between 0 and 6.\n";
@@ -25,7 +22,7 @@ void Game::play(int column) {
 }
 
 Status Game::status() const {
-    // TODO: Implement logic to check for a win or draw
+
     return ONGOING;
 }
 
