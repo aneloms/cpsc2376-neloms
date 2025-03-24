@@ -14,6 +14,14 @@ int main() {
         std::cout << game;
     }
 
-    std::cout << "Game Over!\n";
+    Status result = game.status();
+    if (result == PLAYER_1_WINS) {
+        std::cout << "Player 1 wins!\n";
+    } else if (result == PLAYER_2_WINS) {
+        std::cout << "Player 2 wins!\n";
+    } else {
+        std::cout << "It's a draw!\n";
+    }
+
     return 0;
 }

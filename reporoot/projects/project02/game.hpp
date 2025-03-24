@@ -13,12 +13,15 @@ private:
     std::vector<std::vector<Cell>> board;
     int currentPlayer;
 
+    bool checkWin(int row, int col) const; 
+    bool checkDraw() const; 
+
 public:
-    Game();
+    Game(); 
 
     void play(int column);   
     Status status() const;   
-    void display() const;   
+    void display() const;    
 
     friend std::ostream& operator<<(std::ostream& os, const Game& game);
 };
