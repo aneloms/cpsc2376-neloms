@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <iomanip>
+#include <limits>
 
 using namespace std;
 
@@ -35,7 +36,12 @@ void checkBalance(double balance) {
 double deposit(double balance) {
     double amount;
     cout << "Enter deposit amount: ";
-    cin >> amount;
+    if (!(cin >> amount)) {
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "Error: Invalid input. Deposit amount must be a number." << endl;
+        return balance;
+    }
     if (amount <= 0) {
         cout << "Error: Deposit amount must be positive." << endl;
         return balance;
@@ -49,7 +55,12 @@ double deposit(double balance) {
 double withdraw(double balance) {
     double amount;
     cout << "Enter withdrawal amount: ";
-    cin >> amount;
+    if (!(cin >> amount)) {
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "Error: Invalid input. Withdrawal amount must be a number." << endl;
+        return balance;
+    }
     if (amount <= 0) {
         cout << "Error: Withdrawal amount must be positive." << endl;
         return balance;
@@ -67,7 +78,7 @@ double withdraw(double balance) {
 int main() {
     double balance = readBalanceFromFile();
     cout << "Welcome to Your Bank Account!" << endl;
-    
+
     int choice;
     do {
         cout << "\nMenu:" << endl;
@@ -76,7 +87,13 @@ int main() {
         cout << "3. Withdraw Money" << endl;
         cout << "4. Exit" << endl;
         cout << "Enter your choice: ";
-        cin >> choice;
+
+        if (!(cin >> choice)) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Invalid input. Please enter a number between 1 and 4." << endl;
+            continue;
+        }
 
         switch (choice) {
             case 1:
@@ -95,6 +112,6 @@ int main() {
                 cout << "Invalid choice. Please enter a number between 1 and 4." << endl;
         }
     } while (choice != 4);
-    
+
     return 0;
 }
